@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
 import authService from '../services/authService';
+import { Error } from '../types/error';
 const loginUser = async (req:Request, res:Response) => {
   try {
     const user=await authService.loginUser(req.body)
     res.json(user)
-  } catch (error:any) {
+  } catch (err) {
+    const error: Error = err as unknown as Error;
     res.status(500).send(error.message)
   }
 };
@@ -18,8 +20,9 @@ const registerUser = async (req:Request, res: Response) => {
     res.status(400).send("Password do not match")
   const user = await authService.registerUser(req.body);
   res.json(user);
-} catch (error:any) {
-  res.status(404).send(error.message);
+} catch (err) {
+  const error: Error = err as unknown as Error;
+  res.status(error.status ||5000).send(error.message);
 }
 }
 export default {
