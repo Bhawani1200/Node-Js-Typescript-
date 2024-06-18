@@ -10,6 +10,8 @@ app.use(bodyParser.urlencoded({extended:false}))
 const PORT=process.env.PORT||5000;
 app.use("/api/auth",authRoutes)
 app.use("/api/products",productRoutes)
+
+
 app.listen(PORT,()=>{
     console.log(`The port is running on ${PORT}`)
 })
